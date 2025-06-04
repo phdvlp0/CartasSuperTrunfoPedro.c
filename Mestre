@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+typedef struct {
+    unsigned long int populacao;
+    float area, pib;
+    int pontos;
+    float densidade, pib_per_capita, super_poder;
+
+} Carta;
+
+// Area para dados
+Carta lerCarta(int n) {
+    printf("\n--- Carta %d ---\n" , n);
+
+    printf("População: ");
+    scanf("%lu", &c.populacao);
+
+    printf("Área: ");
+    scanf("%f", &c.area);
+
+    printf("PIB: ");
+    scanf("%f", &c.pib);
+
+    printf("Pontos Turisticos: ");
+    scanf("%d", &c.pontos);
+    
+    return c;
+
+
+}
+
+// Area para calcular os dados e retornar uma carta 
+Carta calcular(Carta c) {
+    c.densidade = c.populacao / c.area;
+    c.pib_per_capita = c.pib / c.populacao;
+    c.super_poder = c.populacao + c.area + c.pib + c.pontos + c.pib_per_capita + (1.0 / c.densidade);
+
+}
+
+// Area para comparação que retorna 1 ou 0 (1 = carta 1 vence)
+int compararMaior(float a, float b) {
+    return a > b;
+
+}
+int compararMenor(float a, float b) {
+    return a < b;
+
+}
+int main () {
+    Carta c1 = calcular(lerCarta(1));
+    Carta c2 = calcular(lerCarta(2));
+
+    printf("\n--- Comparação das Cartas ---\n");
+    printf("População: Carta 1 venceu (%d)\n", compararMaior(c1.populacao, c2.populacao));
+    printf("Área: Carta 1 venceu (%d)\n", compararMaior(c1.area, c2.area));
+    printf("PIB: Carta 1 venceu (%d)\n", compararMaior(c1.pib, c2.pib));
+    printf("Pontos Turisticos: Carta 1 venceu (%d)\n", compararMaior(c1.pontos, c2.pontos));
+    printf("Densidade Populacional: Carta 1 venceu (%d)\n", compararMenor(c1.densidade, c2.densidade));
+    printf("PIB per capita: Carta 1 venceu (%d)\n", compararMaior(c1.pib_per_capita, c2.pib_per_capita));
+    printf("Super Poder: Carta 1 venceu (%d)\n", compararMaior(c1.super_poder, c2.super_poder));
+
+
+    return 0;
+}
