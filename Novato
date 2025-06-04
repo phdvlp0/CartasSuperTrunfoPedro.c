@@ -1,9 +1,8 @@
 #include <stdio.h>
-#include <locale.h>
 #include <string.h>
 
 int main() {
-setlocale(LC_ALL, "Portuguese");
+
 
 char estado1, estado2;
 char cidade1, cidade2;
