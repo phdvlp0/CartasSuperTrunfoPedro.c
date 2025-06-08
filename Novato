@@ -120,7 +120,7 @@ printf("\nResultado: Empate!\n");
 
 int escolha;
 
-// Menu interativo nivel aventureiro
+// Menu interativo logica nivel aventureiro
 printf("Escolha o atributo para comparar:\n");
 printf("1 - População\n");
 printf("2 - Área\n");
@@ -208,9 +208,118 @@ default:
   printf("\nOpção inválida! Tente novamente com uma opção de 1 a 5.\n")
 }
 
-return 0;
+// Desafio logica nivel mestre
+
+#include <stdio.h>
+#include <string.h>
+
+// Definição de estrutura da carta
+struct Carta {
+char nomeCidade[50];
+int populacao;
+float area;
+float pib;
+int pontosTuristicos;
+float densidade;
+};
+
+// Função que retorna o valor de um atributo da carta com base na escolha 
+float getAtributo(struct Carta c, int escolha) {
+  switch (escolha) {
+     case 1: return c.populacao;
+     case 2: return c.area;
+     case 3: return c.pib;
+     case 4: return c.pontosTuristicos;
+     case 5: return c.densidade;
+     default: return 0;
+  }
+}
+
+// Função que retorna o nome de um atributo baseado no numeroe escolhido
+char* nomeAtributo(int escolha) {
+   switch (escolha) {
+   case 1: return "População";
+   case 2: return "Área";
+   case 3: return "PIB";
+   case 4: return "Pontos Turisticos";
+   case 5: return "Densidade";
+   default: return "Desconhecido";
+  }
+}
+
+int main() {
+ // Criação das cartas
+struct Carta carta1 = {"São Paulo", 1230000, 1521.0, 750.0, 50, 0};
+struct Carta carta2 = {"Rio de Janeiro", 6000000, 1200.0, 380.0, 45, 0};
+
+// Calculo densidade populacional
+carta1.densidade = carta1.populacao / carta1.area;
+carta2.densidade = carta2.populacao / carta2.area;
+
+int a1, a2;
+float v1_1, V2_1, v1_2, v2_2;
+
+// Entrada para escolha dos atributos
+printf("Escolha o primeiro atributo:\n1-População\n2-Área\n3-PIB\n4-Pontos Turisticos\n5-Densidade\n> ");
+scanf("%d", &a1);
+
+printf("Escolha o segundo atributo diferente do primeiro):\n");
+for (int i = 1; i <= 5; i++) { 
+  if (i != a1) printf("%d - %s\n", i, nomeAtributo(i));
+}
+printf("> ");
+scanf ("%d", &a2);
+
+// Validação das escolhas
+if (a1 == a2 || a1 < 1 || a1 > 5 || a2 < 1 || a2 > 5) {
+   printf("Atributos inválidos ou repetidos!\n");
+return 1;
 
 }
+
+// Coleta dos valores dos atributos selecionados
+v1_1 = getAtributo(carta1, a1);
+v2_1 = getAtributo(carta2, a1);
+v1_2 = getAtributo(carta1, a2);
+v2_2 = getAtributo(carta2, a2);
+
+// Exibição de valores das cartas
+printf("\n%s:\n %s: %.2f\n %s: %.2f\n", carta1.nomeCidade, nomeAtributo(a1), v1_1, nomeAtributo(a2), v1_2);
+printf("\n%s:\n %s: %.2f\n %s: %.2f\n", carta2.nomeCidade, nomeAtributo(a1), v2_1, nomeAtributo(a2), v2_2);
+
+int pontos1 = 0, pontos2 = 0;
+
+// Comparando: menor densidade é melhor, outros atributos: maior é melhor
+pontos1 += (a1 == 5) ? (v1_1 < v2_1) : (v1_1 > v2_1);
+pontos2 += (a1 == 5) ? (v2_1 < v1_1) : (v2_1 > v1_1);
+pontos1 += (a2 == 5) ? (v1_2 < v2_2) : (v1_2 > v2_2);
+pontos2 += (a2 == 5) ? (v2_2 < v1_2) : (v2_2 > v1_2);
+
+// Soma total dos atributos escolhidos
+float soma1 = v1_1 + v1_2;
+float soma2 = v2_1 + v2_2;
+
+// Exibição da soma
+printf("\nSoma dos atributos:\n%s: %.2f\n%s: %.2f\n", carta1.nomeCidade, soma1, carta2.nomeCidade, soma2);
+
+// Resultado final 
+printf("\nResultado: ");
+if (soma1 > soma2)
+  printf("%s venceu!\n", carta1.nomeCidade);
+else if (soma2 > soma1)
+  printf("%s venceu!\n", carta2.nomeCidade);
+else
+printf("Empate!\n");
+
+return 0;
+} 
+
+
+
+
+
+
+
 
 
 
